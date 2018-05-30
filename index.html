@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<title>MTracker</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8">
+<link href="static\cs2.css" rel="stylesheet"/>
+<script src="static\signup.js">
+</script>
+</head>
+<body>
+<div class="head">
+<img src="static\mtr.png"></div>
+<div class="form-container"><div class="form"><p>Welcome to the MaintenanceTracker system.<br/>
+ Please sigin or create an account using the form below.</p><hr id="h01"/>
+   <!--login form -->
+     <div class="form-style">
+     <h1>Sign-In</h1>
+  <form>
+     <input type="email" name="email" placeholder="Email" required autofocus/>
+     <input type="password" name="passwd" placeholder="password" required autofocus/>
+     <input type="submit" value="Login" />
+  </form>
+  <a href="#" class = "forgot">Forgot Your Password ?</a>
+<div class="sigup">
+<p>Don't have an account yet? Tap the signup button below <br/>to create one. It's fast and easy. Au revior.<p>  
+<button onclick="document.getElementById('f01').style.display='block'" style="width:auto;">Sign Up</button>
+</div>
+<div id="f01" class="sform">
+  <span onclick="document.getElementById('f01').style.display='none'" class="close" title="Close sform">&times;</span>
+  <form class="form-content">
+    <div class="container">
+      <h1>Sign Up</h1>
+      <p>Please fill in this form to create an account.</p>
+      <hr>  
+      <input type="email" placeholder="Enter Email Address" name="email" required autofocus>
+      <input type="password" placeholder="Enter Password" name="psd" required autofocus>
+      <input type="password" placeholder="Confirm Password" name="psw_confirm" required autofocus>
+      <div class="bton">
+        <button type="submit" class="signupbtn">Sign Up</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+</div>
+</div>
+</div> 
+<div class="footer">
+<p>MaintenanceTracker</p>
+</div> 
+</body>
+</html>
