@@ -4,23 +4,27 @@
 <title>MTracker</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="utf-8">
-<link href="cs2.css" rel="stylesheet"/>
-<script src="signup.js">
+<link href="static\cs2.css" rel="stylesheet"/>
+<script src="static\signup.js">
 </script>
 </head>
 <body>
 <div class="head">
-<img src="mtr.png"></div>
+<img src="static\mtr.png"></div>
 <div class="form-container"><div class="form"><p>Welcome to the MaintenanceTracker system.<br/>
  Please sigin or create an account using the form below.</p><hr id="h01"/>
    <!--login form -->
      <div class="form-style">
      <h1>Sign-In</h1>
-  <form>
-     <input type="email" name="email" placeholder="Email" required autofocus/>
-     <input type="password" name="passwd" placeholder="password" required autofocus/>
+  <form action="" method="POST">
+     <input type="email" name="email" value="{{request.form.email}}"placeholder="Email" required autofocus/>
+     <input type="password" name="passwd" value="{{request.form.passwd}}" placeholder="password" required autofocus/>
      <input type="submit" value="Login" />
   </form>
+  {% if error %}
+  <p class = "error"><strong>Error:</strong> {{ error }}
+  {% endif %}
+  </p>
   <a href="#" class = "forgot">Forgot Your Password ?</a>
 <div class="sigup">
 <p>Don't have an account yet? Tap the signup button below <br/>to create one. It's fast and easy. Au revior.<p>  
