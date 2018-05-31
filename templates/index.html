@@ -17,14 +17,10 @@
      <div class="form-style">
      <h1>Sign-In</h1>
   <form action="" method="POST">
-     <input type="email" name="email" value="{{request.form.email}}"placeholder="Email" required autofocus/>
-     <input type="password" name="passwd" value="{{request.form.passwd}}" placeholder="password" required autofocus/>
+     <input type="email" name="email" placeholder="Email" required  autofocus/>
+     <input type="password" name="passwd"  placeholder="password" required autofocus/>
      <input type="submit" value="Login" />
   </form>
-  {% if error %}
-  <p class = "error"><strong>Error:</strong> {{ error }}
-  {% endif %}
-  </p>
   <a href="#" class = "forgot">Forgot Your Password ?</a>
 <div class="sigup">
 <p>Don't have an account yet? Tap the signup button below <br/>to create one. It's fast and easy. Au revior.<p>  
