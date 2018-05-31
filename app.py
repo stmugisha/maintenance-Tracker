@@ -15,24 +15,21 @@ req_uest.append(dictionary)
 def login():
     return
 
-@app.route('/api/v1/Signup', methods=['GET', 'POST'])
+@app.route('/api/v1/signup', methods=['GET', 'POST'])
 def Signup():
     return 
 
 @app.route('/api/v1/requests', methods=['POST'])
 def add_requests():
-    new_rq = {'Request Type': request.json['Request Type'], 
-            'Clients name': request.json['Clients name'], 
-            'requestID': request.json['RequestID']}
-    
-    req_uest.append(new_rq)
+    data=request.get_json()
+    username=data['username']   
     return jsonify({'request': req_uest})
 
 @app.route('/api/v1/requests', methods=['GET'])
 def requests():
-    return make_response(jsonify({'requests': req_uest}), 200)
+    return make_response(jsonify({'requests': dictionary}), 200)
 
-@app.route('/api/v1/<str:Request Type>', methods=['PUT'])
+@app.route('/api/v1/<string:Request_Type>', methods=['PUT'])
 def r_edit(Request_Type):
     req_st = [requst for requst in req_uest if requst['Request_Type'] == Request_Type]
     req_st[0]['Request_Type'] = request.json['Request_Type']
