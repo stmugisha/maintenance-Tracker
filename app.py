@@ -5,7 +5,7 @@ app = Flask(__name__)
 credentials = [{'email':'msteve@admin.com','Password': 'admin'},
                {'email':'msteve@gmail.com', 'Password': 1234}]
 req_uest = []
-dictionary = {'Request_Type':'car repair', 'Clients name':
+dictionary = {'request_type':'car repair', 'clients_name':
               'steph', 'requestID': 1}
 
 req_uest.append(dictionary)
@@ -15,14 +15,20 @@ req_uest.append(dictionary)
 def login():
     return
 
-@app.route('/api/v1/signup', methods=['GET', 'POST'])
+@app.route('/api/v1/Signup', methods=['GET', 'POST'])
 def Signup():
     return 
 
 @app.route('/api/v1/requests', methods=['POST'])
 def add_requests():
     data=request.get_json()
-    username=data['username']   
+    reqType=data['request_type']
+    clnt_name = data['clients_name']
+    new_rq = {'request_type': reqType, 
+             'clients_name': clnt_name 
+             }
+    
+    req_uest.append(new_rq)
     return jsonify({'request': req_uest})
 
 @app.route('/api/v1/requests', methods=['GET'])
