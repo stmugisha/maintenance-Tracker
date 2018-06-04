@@ -1,12 +1,6 @@
 [
   "test.py::TestClass::test_add_req", 
-  "test.py::TestClass::test_correct_login", 
-  "test.py::TestClass::test_incorrect_login", 
+  "test.py::TestClass::test_edit_req", 
   "test.py::TestClass::test_incorrect_req", 
-  "test.py::TestClass::test_index", 
-  "test.py::TestClass::test_login_page_loads", 
-  "test.py::TestClass::test_logout", 
-  "test.py::TestClass::test_logout_route_requires_login", 
-  "test.py::TestClass::test_main_route_requires_login", 
   "test.py::TestClass::test_requests"
 ]
