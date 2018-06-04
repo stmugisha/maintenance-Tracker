@@ -1,0 +1,11 @@
+{
+  "test.py::TestClass::test_correct_login": true, 
+  "test.py::TestClass::test_incorrect_login": true, 
+  "test.py::TestClass::test_index": true, 
+  "test.py::TestClass::test_login_page_loads": true, 
+  "test.py::TestClass::test_logout": true, 
+  "test.py::TestClass::test_logout_route_requires_login": true, 
+  "test.py::TestClass::test_main_route_requires_login": true, 
+  "test.py::TestClass::test_posts_show_up_on_main_page": true, 
+  "test.py::TestClass::test_welcome_route_works_as_expected": true
+}

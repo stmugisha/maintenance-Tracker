@@ -67,10 +67,6 @@ def r_edit(request_type):
     req_st[0]['request_type'] = request.json['request_type']
     return jsonify({'request_type': req_st[0]})
 
-@app.route('/api/v1/<string:requestID>', methods=['GET'])
-def get_requestID():
-    return
-
 
 @app.route('/api/v1/logout')
 def logout():
