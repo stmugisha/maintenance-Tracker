@@ -23,7 +23,7 @@ def login():
     if not email or not password:
         return make_response(jsonify({'message': 'all fields are required'}), 400)
 
-        valid_email = validate_email(email)
+        valid_email = validate_email('email')
         if not valid_email:
             return make_response(jsonify({'message': 'invalid email address'}), 400)
 
@@ -31,8 +31,8 @@ def login():
             if user[email] == email and user[password] == password:
                 return make_response(jsonify({'message': 'You are logged in'}), 200)
 
-        return make_response(jsonify({'message': 'Invalid username or password.'}), 400)
-    return
+        make_response(jsonify({'message': 'Invalid username or password.'}), 400)
+    make_response(jsonify({'Please login'}), 400)
 
 @app.route('/api/v1/Signup', methods=['POST'])
 def Signup():
@@ -54,8 +54,8 @@ def add_requests():
         'clients_name': request.json.get('clients_name'),
         'done': False
     }
-    requests.append(req)
-    return jsonify( { 'Request': req_uest } ), 201
+    req_uest.append(req)
+    return jsonify( ({ 'Request': req_uest } ), 200)
 
 @app.route('/api/v1/requests', methods=['GET'])
 def requests():
@@ -63,13 +63,17 @@ def requests():
 
 @app.route('/api/v1/<string:request_type>', methods=['PUT'])
 def r_edit(request_type):
-    req_st = [requst for requst in req_uest if requst['request_type'] == request_type]
-    req_st[0]['request_type'] = request.json['request_type']
-    return jsonify({'request_type': req_st[0]})
+    #req_st = [reqst for reqst in req_uest if reqst['request_type'] == request_type]
+    inst = request.get_json()
+    req_uest=  inst.get("request_type")
+    if req_uest:
+        abort(400)
+    else:
+        return jsonify({'request_type': req_uest})
 
 @app.route('/api/v1/<string:requestID>', methods=['GET'])
-def get_requestID():
-    return
+def get_requestID(re):
+    pass
 
 
 @app.route('/api/v1/logout')
