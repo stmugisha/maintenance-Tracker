@@ -1,7 +1,7 @@
 import unittest
 from app.views import app
 import json
-
+from flask_login import current_user
 class TestClass(unittest.TestCase):
     def setUp(self):
         self.tester = app.test_client(self)
