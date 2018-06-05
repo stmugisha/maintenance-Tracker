@@ -1,8 +1,6 @@
 from flask import Flask, make_response, jsonify, request
 from flask import flash, url_for, redirect, abort
-#from flask_login import login_user, logout_user
-#from validate_email import validate_email
-#instantiating app object
+
 app = Flask(__name__)
 
 users = [{'email':'steve@admin.com','password': 'admin'},
@@ -19,7 +17,7 @@ def login():
     data = request.get_json()
     email = data['email']
     password = data['password']
-    
+
 
 @app.route('/api/v1/Signup', methods=['POST'])
 def Signup():
@@ -67,12 +65,7 @@ def get_requestID(requestID):
     pass
 
 
-"""@app.route('/api/v1/logout')
-def logout():
-    logout_user()
-    flash('You were logged out')
-    return redirect(url_for('login')) 
-"""
+
 #starting the server
 if __name__ == '__main__':
     app.run(debug=True)
