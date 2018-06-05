@@ -9,8 +9,8 @@ class users:
     
     def login(self, email, password):
          pass
-    def signup(self, userid, email, user_name, password, confirm_password):
-        self.cursor.execute(("INSERT INTO users VALUES(%s,%s,%s,%s,%s)"),(userid,email,user_name,password,confirm_password))
+    def signup(self,email, user_name, password, confirm_password):
+        self.cursor.execute(("INSERT INTO users VALUES(%s,%s,%s,%s)"),(email,user_name,password,confirm_password))
 
     def all_users(self):
         self.cursor.execute("SELECT * FROM users")
