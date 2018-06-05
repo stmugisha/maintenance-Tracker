@@ -1,7 +1,7 @@
 from flask import Flask, make_response, jsonify, request
 from flask import flash, url_for, redirect, abort
-from flask_login import login_user, logout_user
-from validate_email import validate_email
+#from flask_login import login_user, logout_user
+#from validate_email import validate_email
 #instantiating app object
 app = Flask(__name__)
 
@@ -19,20 +19,7 @@ def login():
     data = request.get_json()
     email = data['email']
     password = data['password']
-
-    if not email or not password:
-        return make_response(jsonify({'message': 'all fields are required'}), 400)
-
-        valid_email = validate_email('email')
-        if not valid_email:
-            return make_response(jsonify({'message': 'invalid email address'}), 400)
-
-        for user in users:
-            if user[email] == email and user[password] == password:
-                return make_response(jsonify({'message': 'You are logged in'}), 200)
-
-        make_response(jsonify({'message': 'Invalid username or password.'}), 400)
-    make_response(jsonify({'Please login'}), 400)
+    
 
 @app.route('/api/v1/Signup', methods=['POST'])
 def Signup():
@@ -52,7 +39,7 @@ def add_requests():
         'requestID': req_uest[-1]['requestID'] + 1,
         'request_type': request.json['request_type'],
         'clients_name': request.json.get('clients_name'),
-        'done': False
+        
     }
     req_uest.append(req)
     return jsonify( ({ 'Request': req_uest } ), 200)
@@ -61,26 +48,31 @@ def add_requests():
 def requests():
     return make_response(jsonify({'requests': dictionary}), 200)
 
-@app.route('/api/v1/<string:request_type>', methods=['PUT'])
-def r_edit(request_type):
-    #req_st = [reqst for reqst in req_uest if reqst['request_type'] == request_type]
-    inst = request.get_json()
-    req_uest=  inst.get("request_type")
-    if req_uest:
-        abort(400)
-    else:
-        return jsonify({'request_type': req_uest})
+@app.route('/api/v1/requests/<int:requestID>', methods=['PUT'])
+def r_edit(requestID):
+    req = {}
+    req_data = request.get_json()
+    for reqst in req_uest:
+        if requestID == 0:
+            abort (404)
+        if requestID == reqst["requestID"]:
+            req = reqst
+            break
 
+    req['request_type'] = req_data['request_type']
+
+    return jsonify(req)
 @app.route('/api/v1/<string:requestID>', methods=['GET'])
-def get_requestID(re):
+def get_requestID(requestID):
     pass
 
 
-@app.route('/api/v1/logout')
+"""@app.route('/api/v1/logout')
 def logout():
     logout_user()
     flash('You were logged out')
-    return redirect(url_for('login'))
+    return redirect(url_for('login')) 
+"""
 #starting the server
 if __name__ == '__main__':
     app.run(debug=True)

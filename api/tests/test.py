@@ -30,5 +30,5 @@ class TestClass(unittest.TestCase):
 
     #check invalid request modification.
     def test_edit_req(self):
-        response = self.tester.put('/api/v1/<string:request_type>', content_type = 'application/json',)
-        self.assertEqual(response.status_code, 400)
+        response = self.tester.put('/api/v1/requests/<int:requestID>', content_type = 'application/json',)
+        self.assertEqual(response.status_code, 404)
