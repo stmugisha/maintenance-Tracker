@@ -1,11 +1,11 @@
 from flask import Flask, make_response, jsonify, request
 from flask import flash, url_for, redirect, abort
-#from flask_login import login_user, logout_user
+from dbmodel.dbmodels import users
 #from validate_email import validate_email
 #instantiating app object
 app = Flask(__name__)
 
-users = [{'email':'steve@admin.com','password': 'admin'},
+user = [{'email':'steve@admin.com','password': 'admin'},
                {'email':'steve@gmail.com', 'Password': 1234}]
 req_uest = []
 dictionary = {'request_type':'car repair', 'clients_name':
@@ -13,21 +13,25 @@ dictionary = {'request_type':'car repair', 'clients_name':
 
 req_uest.append(dictionary)
 
+newbie = users()
+
 #Login_
 @app.route('/api/v1/Login', methods=['GET', 'POST'])
 def login():
     data = request.get_json()
     email = data['email']
     password = data['password']
+    pass
 
 
 @app.route('/api/v1/Signup', methods=['POST'])
 def Signup():
     sdata = request.get_json()
     email = sdata['email']
+    user_name = sdata['user_name']
     password = sdata['password']
     confirm_password = sdata['confirm_password']
-    users.append(sdata)
+    newbie.signup(email, user_name, password, confirm_password)
 
     return jsonify(({'message': 'new user created'}), 201)
 
