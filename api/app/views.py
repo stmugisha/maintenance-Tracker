@@ -5,14 +5,6 @@ from dbmodel.dbmodels import users
 #instantiating app object
 app = Flask(__name__)
 
-user = [{'email':'steve@admin.com','password': 'admin'},
-               {'email':'steve@gmail.com', 'Password': 1234}]
-req_uest = []
-dictionary = {'request_type':'car repair', 'clients_name':
-              'steph', 'requestID': 1}
-
-req_uest.append(dictionary)
-
 newbie = users()
 
 #Login_
@@ -23,7 +15,7 @@ def login():
     password = data['password']
     pass
 
-
+#signup endpoint
 @app.route('/api/v1/Signup', methods=['POST'])
 def Signup():
     sdata = request.get_json()
@@ -36,6 +28,7 @@ def Signup():
 
     return jsonify(({'message': 'new user created'}), 201)
 
+#create request endpoint
 @app.route('/api/v1/requests', methods=['POST'])
 def add_requests():
     if not request.json or not 'request_type' in request.json:
@@ -48,17 +41,24 @@ def add_requests():
     newbie.create_request(request_type, desscription)
     return jsonify(({ 'message': 'Your request has been successfully submitted' }), 200)
 
+#get all requests endpoint
 @app.route('/api/v1/requests', methods=['GET'])
 def requests():
     return(jsonify(newbie.get_all_requests()), 200)
     
+#update request endpoint
+@app.route('/api/v1/requests/<int:requestid>', methods=['PUT'])
+def r_edit(requestid):
+    redit = request.get_json()
+    requestid = redit ['requestid']
+    request_type = redit ['request_type']
+    desscription = redit ['desscription']
+    newbie.edit_request(request_type,desscription,requestid)
 
-@app.route('/api/v1/requests/<int:requestID>', methods=['PUT'])
-def r_edit(requestID):
-    
-    return jsonify()
-@app.route('/api/v1/<string:requestID>', methods=['GET'])
-def get_requestID(requestID):
+    return (jsonify({'message': 'Request successfully updated'}), 200)
+
+@app.route('/api/v1/<string:requestid>', methods=['GET'])
+def get_requestID(requestid):
     pass
 
 

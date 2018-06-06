@@ -10,13 +10,15 @@ class users:
     def login(self, email, password):
          pass
     def signup(self,email, username, pwd, confirm_password, role):
-        self.cursor.execute("INSERT INTO users (email,username, user_password,confirm_password,role) VALUES(%s,%s,%s,%s,%s)",(email,username,pwd,confirm_password,role))
+        self.cursor.execute("""INSERT INTO users (email,username, user_password,confirm_password,
+                         role) VALUES(%s,%s,%s,%s,%s)""",(email,username,pwd,confirm_password,role))
 
     def all_users(self):
         self.cursor.execute("SELECT * FROM users")
         
     def create_request(self, request_type, desscription):
-        self.cursor.execute("INSERT INTO requests(request_type,desscription) VALUES(%s,%s)", (request_type,desscription))
+        self.cursor.execute("""INSERT INTO requests(request_type,desscription) VALUES(%s,%s)""", 
+                           (request_type,desscription))
 
     def get_all_requests(self):
         self.cursor.execute("SELECT * FROM requests")
@@ -33,5 +35,10 @@ class users:
         return all_requests
 
     def edit_request(self,requestid,request_type,desscription):
-        self.cursor.execute()
+        edit = """UPDATE requests
+                SET request_type = %s,
+                    desscription = %s
+                WHERE requestid = %s;
+                """
+        self.cursor.execute(edit,(requestid,request_type,desscription))
         
