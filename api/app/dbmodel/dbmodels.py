@@ -41,4 +41,11 @@ class users:
                 WHERE requestid = %s;
                 """
         self.cursor.execute(edit,(requestid,request_type,desscription))
-        
+
+    def getby_id(self,requestid):
+        req_st = """SELECT requestid, request_type, desscription 
+                    FROM requests
+                    WHERE requestid = %s;
+                    """
+        self.cursor.fetchone(req_st,(requestid))
+    

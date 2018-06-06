@@ -1,7 +1,7 @@
 from flask import Flask, make_response, jsonify, request
 from flask import flash, url_for, redirect, abort
 from dbmodel.dbmodels import users
-#from validate_email import validate_email
+
 #instantiating app object
 app = Flask(__name__)
 
@@ -56,10 +56,12 @@ def r_edit(requestid):
     newbie.edit_request(request_type,desscription,requestid)
 
     return (jsonify({'message': 'Request successfully updated'}), 200)
-
-@app.route('/api/v1/<string:requestid>', methods=['GET'])
+#get request by id
+@app.route('/api/v1/requests<string:requestid>', methods=['POST'])
 def get_requestID(requestid):
-    pass
+    r_id = request.get_json()
+    requestid = r_id ['requestid']
+    return (jsonify(newbie.getby_id(requestid)), 200)
 
 
 """@app.route('/api/v1/logout')
