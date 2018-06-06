@@ -28,10 +28,11 @@ def login():
 def Signup():
     sdata = request.get_json()
     email = sdata['email']
-    user_name = sdata['user_name']
-    password = sdata['password']
+    username = sdata['username']
+    user_password = sdata['user_password']
     confirm_password = sdata['confirm_password']
-    newbie.signup(email, user_name, password, confirm_password)
+    role = sdata['role']
+    newbie.signup(email, username, user_password, confirm_password, role)
 
     return jsonify(({'message': 'new user created'}), 201)
 
@@ -39,33 +40,23 @@ def Signup():
 def add_requests():
     if not request.json or not 'request_type' in request.json:
         abort(400)
-    req = {
-        'requestID': req_uest[-1]['requestID'] + 1,
-        'request_type': request.json['request_type'],
-        'clients_name': request.json.get('clients_name'),
+
+    req = request.get_json()    
+    request_type = req['request_type']
+    desscription = req['desscription']
         
-    }
-    req_uest.append(req)
-    return jsonify( ({ 'Request': req_uest } ), 200)
+    newbie.create_request(request_type, desscription)
+    return jsonify(({ 'message': 'Your request has been successfully submitted' }), 200)
 
 @app.route('/api/v1/requests', methods=['GET'])
 def requests():
-    return make_response(jsonify({'requests': dictionary}), 200)
+    return(jsonify(newbie.get_all_requests()), 200)
+    
 
 @app.route('/api/v1/requests/<int:requestID>', methods=['PUT'])
 def r_edit(requestID):
-    req = {}
-    req_data = request.get_json()
-    for reqst in req_uest:
-        if requestID == 0:
-            abort (404)
-        if requestID == reqst["requestID"]:
-            req = reqst
-            break
-
-    req['request_type'] = req_data['request_type']
-
-    return jsonify(req)
+    
+    return jsonify()
 @app.route('/api/v1/<string:requestID>', methods=['GET'])
 def get_requestID(requestID):
     pass
