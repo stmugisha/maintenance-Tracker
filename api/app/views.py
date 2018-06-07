@@ -8,65 +8,65 @@ import datetime
 #instantiating app object
 app = Flask(__name__)
 
-newbie = users()
+app.config['SECRET KEY'] = 'thisissecret'
+
+NewUser = users()
 
 #Login_
-@app.route('/api/v1/Login', methods=['GET', 'POST'])
-def login():
-    user = request.get_json()
-    auth = request.authorization
-    if not auth or not auth.email or not auth.password:
-        return make_response('Missing login information', 401)
-    
-    if not user:
-        return make_response(('Ghost user'),401)
-    if check_password_hash(user.password, auth.password):
-        token = jwt.encode({'email':user['email'], 'exp': datetime.datetime.utcnow() + 
-                            datetime.timedelta(minutes = 20)})
-        
-        return (jsonify({'Token': token.decode('UTF-8')}))
-    return make_response(('Unable to verify submitted data.'), 401)  
-    
+@app.route('/Login', methods=['POST'])
+def user_login():
+    post_data = request.get_json()
+    email = post_data ('email')
+    user_password = post_data ('user_password')
 
+    if not NewUser.login(email, user_password):
+        return (jsonify({'message':'Invalid input data'})), 401
+      
+    token = jwt.encode({'email':email, 'exp' : datetime.datetime.utcnow() + 
+                     datetime.timedelta(minutes = 20)}, app.config['SECRET KEY'])   
+    return jsonify({'token': token.decode('UTF-8')}), 201
+    
 #signup endpoint
 @app.route('/api/v1/Signup', methods=['POST'])
 def Signup():
-    sdata = request.get_json()
-    email = sdata['email']
-    username = sdata['username']
-    user_password = sdata['user_password']
-    confirm_password = sdata['confirm_password']
-    role = 'Normal user'
-    if user_password != confirm_password:
-        return jsonify(({'message': 'Unmatching passwords. Please try again.'}), 400)
 
-    user_password = generate_password_hash(sdata['user_password'], method='sha256')
-    confirm_password = generate_password_hash(sdata['confirm_password'], method='sha256')
-    newbie.signup(email, username, user_password, confirm_password, role)
+    signup_data = request.get_json()
+    email = signup_data['email']
+    username = signup_data['username']
+    user_password = signup_data['user_password']
+    confirm_password = signup_data['confirm_password']
+    role = 'Normal user'
+    
+    if user_password != confirm_password:
+        return jsonify (({'message': 'Unmatching passwords. Please try again.'}), 400)
+
+    user_password = generate_password_hash(signup_data['user_password'], method='sha256')
+    confirm_password = generate_password_hash(signup_data['confirm_password'], method='sha256')
+    NewUser.signup(email, username, user_password, confirm_password, role)
     return jsonify(({'message': 'new user created'}), 201)
 
 #all users route
 @app.route('/api/v1/users', methods = ['GET'])
 def allUsers():
-    return (jsonify(newbie.all_users()), 200)
+    return (jsonify(NewUser.all_users()), 200)
 
 #create request endpoint
-@app.route('/api/v1/requests', methods=['POST'])
+@app.route('/api/v1/requests', methods = ['POST'])
 def add_requests():
     if not request.json or not 'request_type' in request.json:
         abort(400)
 
-    req = request.get_json()    
-    request_type = req['request_type']
-    desscription = req['desscription']
+    NewRequest = request.get_json()    
+    request_type = NewRequest ['request_type']
+    desscription = NewRequest ['desscription']
         
-    newbie.create_request(request_type, desscription)
+    NewUser.create_request(request_type, desscription)
     return jsonify(({ 'message': 'Your request has been successfully submitted' }), 200)
 
 #get all requests endpoint
 @app.route('/api/v1/requests', methods=['GET'])
 def requests():
-    return(jsonify(newbie.get_all_requests()), 200)
+    return(jsonify(NewUser.get_all_requests()), 200)
     
 #update request endpoint
 @app.route('/api/v1/requests/<int:requestid>', methods=['PUT'])
@@ -75,14 +75,15 @@ def r_edit(requestid):
     requestid = redit ['requestid']
     request_type = redit ['request_type']
     desscription = redit ['desscription']
-    newbie.edit_request(request_type,desscription,requestid)
+    NewUser.edit_request(request_type,desscription,requestid)
     if requestid < 0:
         return(jsonify({'message': 'invalid requestid'}), 405)
     return (jsonify({'message': 'Request successfully updated'}), 200)
+
 #get request by id
 @app.route('/api/v1/requests/<requestid>', methods=['POST'])
 def get_requestID(requestid):
-    return (jsonify(newbie.getby_id()), 200)
+    return (jsonify(NewUser.getby_id()), 200)
 
 
 """@app.route('/api/v1/logout')

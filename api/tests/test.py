@@ -22,10 +22,10 @@ class TestClass(unittest.TestCase):
 
     #checking that users can add requests
     def test_add_req(self):
-        dta = {'request_type':'phone repair', 'desscription':
+        test_data = {'request_type':'phone repair', 'desscription':
               'cracked screen'}
         response = self.tester.post('/api/v1/requests', content_type = 'application/json', 
-                                     data = json.dumps(dta))
+                                     data = json.dumps(test_data))
 
         self.assertEqual(response.status_code, 200)
 
@@ -61,5 +61,10 @@ class TestClass(unittest.TestCase):
     def test_variance(self):
         response = self.tester.post('/api/v1/Signup',content_type = 'application/json')
         self.assertTrue('Unmatching passwords. Please try again.', response.data)
-        
+
+    #testing missing info in login
+    def test_missing_login(self):
+        response = self.tester.post('/api/v1/Login',content_type = 'application/json')
+        self.assertTrue('Missing login information', response.data)
+         
 
