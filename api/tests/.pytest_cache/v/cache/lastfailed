@@ -1,6 +1,5 @@
 {
   "test.py::TestClass::test_correct_login": true, 
-  "test.py::TestClass::test_edit_req": true, 
   "test.py::TestClass::test_incorrect_login": true, 
   "test.py::TestClass::test_index": true, 
   "test.py::TestClass::test_login_page_loads": true, 
@@ -9,5 +8,6 @@
   "test.py::TestClass::test_main_route_requires_login": true, 
   "test.py::TestClass::test_posts_show_up_on_main_page": true, 
   "test.py::TestClass::test_requests": true, 
+  "test.py::TestClass::test_signup_code": true, 
   "test.py::TestClass::test_welcome_route_works_as_expected": true
 }

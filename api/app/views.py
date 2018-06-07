@@ -14,8 +14,8 @@ newbie = users()
 @app.route('/api/v1/Login', methods=['GET', 'POST'])
 def login():
     user = request.get_json()
-    auth = request.authorisation
-    if not auth or not auth(user['email']) or not auth(user['password']):
+    auth = request.authorization
+    if not auth or not auth.email or not auth.password:
         return make_response('Missing login information', 401)
     
     if not user:
@@ -77,7 +77,7 @@ def r_edit(requestid):
     desscription = redit ['desscription']
     newbie.edit_request(request_type,desscription,requestid)
     if requestid < 0:
-        return(jsonify({'message': 'invalid requestid'}), 404)
+        return(jsonify({'message': 'invalid requestid'}), 405)
     return (jsonify({'message': 'Request successfully updated'}), 200)
 #get request by id
 @app.route('/api/v1/requests/<requestid>', methods=['POST'])

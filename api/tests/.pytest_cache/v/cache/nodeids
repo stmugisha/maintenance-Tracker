@@ -1,6 +1,10 @@
 [
   "test.py::TestClass::test_add_req", 
+  "test.py::TestClass::test_all_requests", 
   "test.py::TestClass::test_edit_req", 
   "test.py::TestClass::test_incorrect_req", 
-  "test.py::TestClass::test_requests"
+  "test.py::TestClass::test_requests", 
+  "test.py::TestClass::test_signup", 
+  "test.py::TestClass::test_signup_code", 
+  "test.py::TestClass::test_variance"
 ]
