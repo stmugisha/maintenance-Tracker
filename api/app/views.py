@@ -4,6 +4,7 @@ from dbmodel.dbmodels import users
 from werkzeug.security import generate_password_hash, check_password_hash
 import jwt
 import datetime
+import re
 
 #instantiating app object
 app = Flask(__name__)
@@ -38,8 +39,13 @@ def Signup():
     role = 'Normal user'
     if len(username) <= len ('liver'):
         return (jsonify ({'message': 'Below acceptable character length.'}))
+
     if len(email) <= len('mapp@gmail.com'):
         return (jsonify ({'message': 'Invalid email character length.'}))
+
+    if not re.match(r"^[A-Za-z0-9\.\+_-]+@[A-Za-z0-9\._-]+\.[a-zA-Z]*$", email):
+        return (jsonify ({'message': 'Invalid email address.'}))
+
     if user_password != confirm_password:
         return jsonify ({'message': 'Unmatching passwords. Please try again.'})
     else:
