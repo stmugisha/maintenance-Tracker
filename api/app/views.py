@@ -13,7 +13,7 @@ app.config['SECRET KEY'] = 'thisissecret'
 NewUser = users()
 
 #Login_
-@app.route('/Login', methods=['POST'])
+@app.route('/api/v1/Login', methods=['POST'])
 def user_login():
     post_data = request.get_json()
     email = post_data ('email')
@@ -36,15 +36,18 @@ def Signup():
     user_password = signup_data['user_password']
     confirm_password = signup_data['confirm_password']
     role = 'Normal user'
-    if len (email) or len(username) or len(user_password) < 7:
-        return jsonify ({'message': 'Below acceptable data length. Please try again.'}), 400
+    if len(username) <= len ('liver'):
+        return (jsonify ({'message': 'Below acceptable character length.'}))
+    if len(email) <= len('mapp@gmail.com'):
+        return (jsonify ({'message': 'Invalid email character length.'}))
     if user_password != confirm_password:
-        return jsonify ({'message': 'Unmatching passwords. Please try again.'}), 400
-
-    user_password = generate_password_hash(signup_data['user_password'], method='sha256')
-    confirm_password = generate_password_hash(signup_data['confirm_password'], method='sha256')
-    NewUser.signup(email, username, user_password, confirm_password, role)
-    return jsonify(({'message': 'new user created'}), 201)
+        return jsonify ({'message': 'Unmatching passwords. Please try again.'})
+    else:
+        user_password = generate_password_hash(signup_data['user_password'], method='sha256')
+        confirm_password = generate_password_hash(signup_data['confirm_password'], method='sha256')
+    
+        NewUser.signup(email, username, user_password, confirm_password, role)
+        return jsonify(({'message': 'new user created'}), 201)
 
 #all users route
 @app.route('/api/v1/users', methods = ['GET'])
@@ -61,9 +64,10 @@ def add_requests():
     request_type = NewRequest ['request_type']
     desscription = NewRequest ['desscription']
     
-    if len(request_type) or len(desscription) < 5:
-        return (jsonify({'message': 'Minimum character length is 5'})),400
-
+    if len(request_type) < len('liverpool'):
+        return (jsonify({'message': 'Minimum character length is 10'}))
+    if len(desscription) < len('liverpool'):
+        return (jsonify({'message': 'Minimum character length is 10'}))
     NewUser.create_request(request_type, desscription)
     return jsonify(({ 'message': 'Your request has been successfully submitted' }), 200)
 
@@ -90,12 +94,8 @@ def get_requestID(requestid):
     return (jsonify(NewUser.getby_id()), 200)
 
 
-"""@app.route('/api/v1/logout')
-def logout():
-    logout_user()
-    flash('You were logged out')
-    return redirect(url_for('login')) 
-"""
+
+
 #starting the server
 if __name__ == '__main__':
     app.run(debug=True)
