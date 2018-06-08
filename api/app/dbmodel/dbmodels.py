@@ -54,10 +54,10 @@ class users:
 
     def get_all_requests(self):
         self.cursor.execute("SELECT * FROM requests")
-        req = self.cursor.fetchall()
+        req_ue_st = self.cursor.fetchall()
         all_requests = []
         ResquestDictionary = {}
-        for row in req:
+        for row in req_ue_st:
             ResquestDictionary ['requestid'] = row [0]
             ResquestDictionary ['request_type'] = row [1]
             ResquestDictionary ['desscription'] = row [2]

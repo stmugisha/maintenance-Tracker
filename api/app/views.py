@@ -4,6 +4,7 @@ from dbmodel.dbmodels import users
 from werkzeug.security import generate_password_hash, check_password_hash
 import jwt
 import datetime
+import re
 
 #instantiating app object
 app = Flask(__name__)
@@ -38,8 +39,15 @@ def Signup():
     role = 'Normal user'
     if len(username) <= len ('liver'):
         return (jsonify ({'message': 'Below acceptable character length.'}))
+    if len(email) <= len('liverpool'):
+        return (jsonify ({'message': 'Invalid email character length.'}))
+
     if len(email) <= len('mapp@gmail.com'):
         return (jsonify ({'message': 'Invalid email character length.'}))
+
+    if not re.match(r"^[A-Za-z0-9\.\+_-]+@[A-Za-z0-9\._-]+\.[a-zA-Z]*$", email):
+        return (jsonify ({'message': 'Invalid email address.'}))
+
     if user_password != confirm_password:
         return jsonify ({'message': 'Unmatching passwords. Please try again.'})
     else:
@@ -66,7 +74,10 @@ def add_requests():
     
     if len(request_type) < len('liverpool'):
         return (jsonify({'message': 'Minimum character length is 10'}))
+
     if len(desscription) < len('liverpool'):
+        return (jsonify({'message': 'Minimum character length is 10'}))
+    if len(desscription) < len('manchester'):
         return (jsonify({'message': 'Minimum character length is 10'}))
     NewUser.create_request(request_type, desscription)
     return jsonify(({ 'message': 'Your request has been successfully submitted' }), 200)
@@ -92,8 +103,6 @@ def r_edit(requestid):
 @app.route('/api/v1/requests/<requestid>', methods=['POST'])
 def get_requestID(requestid):
     return (jsonify(NewUser.getby_id()), 200)
-
-
 
 
 #starting the server
