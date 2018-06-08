@@ -36,9 +36,10 @@ def Signup():
     user_password = signup_data['user_password']
     confirm_password = signup_data['confirm_password']
     role = 'Normal user'
-    
+    if len (email) or len(username) or len(user_password) < 7:
+        return jsonify ({'message': 'Below acceptable data length. Please try again.'}), 400
     if user_password != confirm_password:
-        return jsonify (({'message': 'Unmatching passwords. Please try again.'}), 400)
+        return jsonify ({'message': 'Unmatching passwords. Please try again.'}), 400
 
     user_password = generate_password_hash(signup_data['user_password'], method='sha256')
     confirm_password = generate_password_hash(signup_data['confirm_password'], method='sha256')
@@ -59,7 +60,10 @@ def add_requests():
     NewRequest = request.get_json()    
     request_type = NewRequest ['request_type']
     desscription = NewRequest ['desscription']
-        
+    
+    if len(request_type) or len(desscription) < 5:
+        return (jsonify({'message': 'Minimum character length is 5'})),400
+
     NewUser.create_request(request_type, desscription)
     return jsonify(({ 'message': 'Your request has been successfully submitted' }), 200)
 
